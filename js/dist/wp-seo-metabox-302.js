@@ -62,7 +62,6 @@
 			);
 		}
 
-		jQuery( '.wpseo-heading' ).hide();
 		jQuery( '.wpseo-metabox-tabs' ).show();
 		// End Tabs code
 

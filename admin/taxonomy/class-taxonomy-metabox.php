@@ -54,7 +54,7 @@ class WPSEO_Taxonomy_Metabox {
 		/* translators: %1$s expands to Yoast SEO */
 		$metabox_heading = sprintf( __( '%1$s Settings', 'wordpress-seo' ), $product_title );
 
-		printf( '<div id="poststuff" class="postbox"><h3><span>%1$s</span></h3><div id="taxonomy_overall"></div><div class="inside">' , $metabox_heading );
+		printf( '<div id="poststuff" class="postbox"><h2><span>%1$s</span></h2><div id="taxonomy_overall"></div><div class="inside">' , $metabox_heading );
 		echo '<div class="wpseo-metabox-sidebar"><ul>';
 
 		foreach ( $content_sections as $content_section ) {
