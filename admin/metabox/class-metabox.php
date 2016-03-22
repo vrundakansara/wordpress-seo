@@ -243,13 +243,16 @@ class WPSEO_Metabox extends WPSEO_Meta {
 	 * Output a tab in the Yoast SEO Metabox
 	 *
 	 * @param string $id      CSS ID of the tab.
-	 * @param string $heading Heading for the tab.
+	 * @param string $heading Heading translatable string for the tab. Pass a
+	 *                        'no-heading' string to omit the heading.
 	 * @param string $content Content of the tab. This content should be escaped.
 	 */
 	public function do_tab( $id, $heading, $content ) {
 		?>
 		<div id="wpseo_<?php echo esc_attr( $id ) ?>" class="wpseotab <?php echo esc_attr( $id ) ?>">
+			<?php if ( 'no-heading' !== $heading ) : ?>
 			<h3 class="wpseo-heading"><?php echo esc_html( $heading ); ?></h3>
+			<?php endif; ?>
 			<table class="form-table">
 				<?php echo $content ?>
 			</table>
