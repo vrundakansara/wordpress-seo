@@ -26,6 +26,10 @@ if ( '' === $tool_page ) {
 			'title' => __( 'Import and Export', 'wordpress-seo' ),
 			'desc' => __( 'Import settings from other SEO plugins and export your settings for re-use on (another) blog.', 'wordpress-seo' ),
 		),
+		'image-alt-checker' => array(
+			'title' => __('Check Image Alt Text' , 'wordpress-seo' ),
+			'desc' => __( 'See a list of image attachments for which no alt text has been specified.', 'wordpress-seo' ),
+		)
 	);
 	if ( WPSEO_Utils::allow_system_file_edit() === true && ! is_multisite() ) {
 		$tools['file-editor'] = array(
@@ -71,7 +75,7 @@ if ( '' === $tool_page ) {
 else {
 	echo '<a href="', admin_url( 'admin.php?page=wpseo_tools' ), '">', __( '&laquo; Back to Tools page', 'wordpress-seo' ), '</a>';
 
-	$tool_pages = array( 'bulk-editor', 'import-export' );
+	$tool_pages = array( 'bulk-editor', 'import-export', 'image-alt-checker' );
 
 	if ( WPSEO_Utils::allow_system_file_edit() === true && ! is_multisite() ) {
 		$tool_pages[] = 'file-editor';
