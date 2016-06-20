@@ -43,8 +43,8 @@ function getIndicatorForScore( score ) {
 		fullText: ''
 	};
 
-	if ( ! isUndefined( app.contentAssessorPresenter ) ) {
-		indicator = app.contentAssessorPresenter.getIndicator( scoreToRating( score ) );
+	if ( ! isUndefined( app.seoAssessorPresenter ) ) {
+		indicator = app.seoAssessorPresenter.getIndicator( scoreToRating( score ) );
 	}
 
 	return indicator;
@@ -1165,8 +1165,7 @@ var updateAdminBar = require( './ui/adminBar' ).update;
 			// ID's of elements that need to trigger updating the analyzer.
 			elementTarget: [tmceId, 'yoast_wpseo_focuskw_text_input', 'yoast_wpseo_metadesc', 'excerpt', 'editable-post-name', 'editable-post-name-full'],
 			targets: {
-				output: 'wpseo-pageanalysis',
-				contentOutput: 'yoast-seo-content-analysis'
+				output: 'wpseo-pageanalysis'
 			},
 			callbacks: {
 				getData: postScraper.getData.bind( postScraper ),
@@ -1178,6 +1177,11 @@ var updateAdminBar = require( './ui/adminBar' ).update;
 			locale: wpseoPostScraperL10n.locale,
 			marker: getMarker()
 		};
+
+		// Determine whether or not the content analysis should be executed.
+		if ( wpseoPostScraperL10n.contentAnalysisActive === '1' ) {
+			args.targets.contentOutput = 'yoast-seo-content-analysis';
+		}
 
 		titleElement = $( '#title' );
 
