@@ -21,6 +21,7 @@ var snippetPreviewHelpers = require( './analysis/snippetPreview' );
 	var App = require( 'yoastseo' ).App;
 
 	var TaxonomyAssessor = require( './assessors/taxonomyAssessor' );
+	var TaxonomyContentAssessor = require( './assessors/taxonomyContentAssessor' );
 	var UsedKeywords = require( './analysis/usedKeywords' );
 
 	var app, snippetPreview;
@@ -440,6 +441,7 @@ var snippetPreviewHelpers = require( './analysis/snippetPreview' );
 			keywordAnalysisActive: isKeywordAnalysisActive(),
 			snippetPreview: snippetPreview
 		};
+
 		if ( isKeywordAnalysisActive() ) {
 			args.callbacks.saveScores = termScraper.saveScores.bind( termScraper );
 		}
@@ -449,6 +451,7 @@ var snippetPreviewHelpers = require( './analysis/snippetPreview' );
 		}
 
 		translations = getTranslations();
+
 		if ( ! isUndefined( translations ) && ! isUndefined( translations.domain ) ) {
 			args.translations = translations;
 		}
@@ -458,6 +461,11 @@ var snippetPreviewHelpers = require( './analysis/snippetPreview' );
 		if ( isKeywordAnalysisActive() ) {
 			app.seoAssessor = new TaxonomyAssessor( app.i18n );
 			app.seoAssessorPresenter.assessor = app.seoAssessor;
+		}
+
+		if ( isContentAnalysisActive() ) {
+			app.contentAssessor = new TaxonomyContentAssessor( app.i18n );
+			app.contentAssessor.assessor = app.contentAssessor;
 		}
 
 		window.YoastSEO = {};
