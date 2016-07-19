@@ -38,7 +38,16 @@ var TaxonomyAssessor = function( i18n ) {
 	];
 };
 
+require( "util" ).inherits( TaxonomyAssessor, Assessor );
+
+// /**
+//  * @inheritDoc
+//  */
+// TaxonomyAssessor.prototype.hasMarker = function( assessment ) {
+// 	return false;
+// }
+
 module.exports = TaxonomyAssessor;
 
-require( "util" ).inherits( module.exports, Assessor );
+
 
