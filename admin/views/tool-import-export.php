@@ -62,7 +62,7 @@ if ( isset( $_FILES['settings_import_file'] ) ) {
 	$import = new WPSEO_Import();
 }
 
-if ( isset( $import ) ) {
+if ( isset( $import ) || has_filter( 'wpseo_import_status' ) ) {
 	/**
 	 * Allow customization of import&export message
 	 *
@@ -70,16 +70,16 @@ if ( isset( $import ) ) {
 	 */
 	$msg = apply_filters( 'wpseo_import_message', $import->msg );
 
-	// Check if we've deleted old data and adjust message to match it.
-	if ( $replace ) {
-		$msg .= ' ' . __( 'The old data of the imported plugin was deleted successfully.', 'wordpress-seo' );
-	}
-
 	if ( $msg != '' ) {
+		// Check if we've deleted old data and adjust message to match it.
+		if ( $replace ) {
+			$msg .= ' ' . __( 'The old data of the imported plugin was deleted successfully.', 'wordpress-seo' );
+		}
 
-		$status = ( $import->success ) ? 'updated' : 'error';
 
-		echo '<div id="message" class="message ', $status, '" style="width:94%;"><p>', $msg, '</p></div>';
+		$status = ( apply_filters( 'wpseo_import_status', $import->success ) ) ? 'updated' : 'error';
+
+		echo '<div id="message" class="message ', $status, '"><p>', $msg, '</p></div>';
 	}
 }
 
@@ -103,7 +103,7 @@ $tabs = array(
 
 	<h2 class="nav-tab-wrapper" id="wpseo-tabs">
 		<?php foreach ( $tabs as $identifier => $tab ) : ?>
-		<a class="nav-tab" id="<?php echo $identifier; ?>-tab" href="#top#<?php echo $identifier; ?>"><?php echo $tab['label']; ?></a>
+			<a class="nav-tab" id="<?php echo $identifier; ?>-tab" href="#top#<?php echo $identifier; ?>"><?php echo $tab['label']; ?></a>
 		<?php endforeach; ?>
 
 		<?php
@@ -121,7 +121,12 @@ foreach ( $tabs as $identifier => $tab ) {
 
 	if ( ! empty( $tab['screencast_video_url'] ) ) {
 		$tab_video_url = $tab['screencast_video_url'];
-		include WPSEO_PATH . 'admin/views/partial-settings-tab-video.php';
+
+		$helpcenter_tab = new WPSEO_Option_Tab( $identifier, $tab['label'],
+			array( 'video_url' => $tab['screencast_video_url'] ) );
+
+		$helpcenter = new WPSEO_Help_Center( $identifier, $helpcenter_tab );
+		$helpcenter->output_help_center();
 	}
 
 	require_once WPSEO_PATH . 'admin/views/tabs/tool/' . $identifier . '.php';
