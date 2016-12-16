@@ -65,15 +65,17 @@
 	};
 
 
+
 	/**
-	 * Removes all unkown shortcodes. Not all plugins properly registerd their shortcodes in the WordPress backend.
-	 * Since we cannot use the data from these shortcodes they must be removed.
+	 * Filters out unregistered shortcodes.
+	 * Currently removes Visual Composer (vc_), Fusion Builder (fusion_) and
+	 * Divi (et_).
 	 *
 	 * @param {string} data The text to remove unknown shortcodes.
 	 * @returns {string} The text with removed unknown shortcodes.
 	 */
-	YoastShortcodePlugin.prototype.removeUnkownShortCodes = function( data ) {
-		data = data.replace( /\[[^\s0-9][/a-z0-9_=\-"'\s]+\]/g, "" );
+	YoastShortcodePlugin.prototype.removeUnregisteredShortCodes = function( data ) {
+		data = data.replace( /\[[/]*[(vc_|et_|fusion_)][/a-z0-9_=\-"'\s]+\]/g, "" );
 		return data;
 	};
 
@@ -92,7 +94,7 @@
 			}
 		}
 
-		data = this.removeUnkownShortCodes( data );
+		data = this.removeUnregisteredShortCodes( data );
 
 		return data;
 	};
