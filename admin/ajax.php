@@ -421,6 +421,20 @@ function wpseo_remove_stopwords_sample_permalink( $permalink, $post_ID, $title, 
 
 add_action( 'get_sample_permalink', 'wpseo_remove_stopwords_sample_permalink', 10, 4 );
 
+/**
+ * Prevents saving the metabox reordering.
+ *
+ * @param string $action The AJAX action name.
+ */
+function prevent_meta_box_reorder( $action ) {
+
+	if ( 'meta-box-order' === $action && strpos( $_POST['order']['side'], 'wpseo_meta' ) !== false ) {
+		wp_die( -1 );
+	}
+}
+
+add_action( 'check_ajax_referer', 'prevent_meta_box_reorder' );
+
 // Crawl Issue Manager AJAX hooks.
 new WPSEO_GSC_Ajax;
 
