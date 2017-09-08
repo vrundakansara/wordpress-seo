@@ -14,9 +14,12 @@
 	syntaxCheck="false"
 	verbose="true"
 	>
+	<php>
+		<env name="WP_PLUGIN_DIR" value="../"/>
+	</php>
 	<testsuites>
 		<testsuite>
-			<directory prefix="test-" suffix=".php">./tests/</directory>
+			<directory prefix="test-" suffix=".php">tests/</directory>
 		</testsuite>
 	</testsuites>
 
@@ -26,7 +29,7 @@
 			<directory>./frontend</directory>
 			<directory>./admin</directory>
 			<exclude>
-				<directory suffix=".php">./deprecated</directory>
+				<directory suffix=".php">deprecated</directory>
 				<file>./inc/wpseo-functions-deprecated.php</file>
 			</exclude>
 		</whitelist>
