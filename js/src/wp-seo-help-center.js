@@ -12,9 +12,6 @@ import HelpCenterYC from "yoast-components/composites/Plugin/HelpCenter/HelpCent
 import colors from "yoast-components/style-guide/colors.json";
 import { YoastButton } from "yoast-components/composites/Plugin/Shared/components/YoastButton";
 
-// Add react-intl translations
-addLocaleData( wpseoHelpCenterData.translations );
-
 /**
  * Executes an action with an argument.
  */
@@ -246,24 +243,35 @@ function toggleSidebar( expanded ) {
 	jQuery( ".wpseo_content_wrapper" ).toggleClass( "yoast-help-center-open", expanded );
 }
 
+/**
+ * Triggers a custom DOM event when a react tabs gets selected.
+ *
+ * @returns {void}
+ */
 function handleTabSelect() {
 	jQuery( window ).trigger( "Yoast:YoastTabsSelected" );
 }
 
-ReactDOM.render(
-	<IntlProvider
-		locale={ wpseoHelpCenterData.translations.locale }
-		messages={ wpseoHelpCenterData.translations }>
-		<HelpCenterIntl
-			onHelpCenterToggle={ toggleSidebar }
-			onTabSelect={ handleTabSelect }
-			onPremiumSupport={ onPremiumSupport }
-			initialTab={ wpseoHelpCenterData.initialTab }
-			adminTabsData={ wpseoHelpCenterData.tabs }
-			additionalHelpCenterTabs={ wpseoHelpCenterData.extraTabs }
-			videoTutorialParagraphs={ wpseoHelpCenterData.videoDescriptions }
-			premiumSupportTabId={ wpseoHelpCenterData.premiumSupportId }
-		/>
-	</IntlProvider>,
-	document.getElementById( wpseoHelpCenterData.mountId )
-);
+if ( window.wpseoHelpCenterData ) {
+	// Add react-intl translations
+	addLocaleData( wpseoHelpCenterData.translations );
+
+	ReactDOM.render(
+		<IntlProvider
+			locale={ wpseoHelpCenterData.translations.locale }
+			messages={ wpseoHelpCenterData.translations }
+		>
+			<HelpCenterIntl
+				onHelpCenterToggle={ toggleSidebar }
+				onTabSelect={ handleTabSelect }
+				onPremiumSupport={ onPremiumSupport }
+				initialTab={ wpseoHelpCenterData.initialTab }
+				adminTabsData={ wpseoHelpCenterData.tabs }
+				additionalHelpCenterTabs={ wpseoHelpCenterData.extraTabs }
+				videoTutorialParagraphs={ wpseoHelpCenterData.videoDescriptions }
+				premiumSupportTabId={ wpseoHelpCenterData.premiumSupportId }
+			/>
+		</IntlProvider>,
+		document.getElementById( wpseoHelpCenterData.mountId )
+	);
+}
