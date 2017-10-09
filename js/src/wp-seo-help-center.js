@@ -185,6 +185,7 @@ class HelpCenter extends React.Component {
 			} );
 		} );
 
+		console.log( "is html injected", additionalTabs );
 		return additionalTabs;
 	}
 
@@ -202,6 +203,7 @@ class HelpCenter extends React.Component {
 					buttonIconColor={ colors.$color_pink_dark }
 					buttonWithTextShadow={ false }
 					onHelpCenterToggle={ this.props.onHelpCenterToggle }
+					onTabSelect={ this.props.onTabSelect }
 					items={ this.getTabs() }/>
 			</div>
 		);
@@ -210,6 +212,7 @@ class HelpCenter extends React.Component {
 
 HelpCenter.propTypes = {
 	onHelpCenterToggle: PropTypes.func,
+	onTabSelect: PropTypes.func,
 	onPremiumSupport: PropTypes.func,
 	adminTabsData: PropTypes.object.isRequired,
 	additionalHelpCenterTabs: PropTypes.array,
@@ -243,12 +246,17 @@ function toggleSidebar( expanded ) {
 	jQuery( ".wpseo_content_wrapper" ).toggleClass( "yoast-help-center-open", expanded );
 }
 
+function handleTabSelect() {
+	jQuery( window ).trigger( "Yoast:YoastTabsSelected" );
+}
+
 ReactDOM.render(
 	<IntlProvider
 		locale={ wpseoHelpCenterData.translations.locale }
 		messages={ wpseoHelpCenterData.translations }>
 		<HelpCenterIntl
 			onHelpCenterToggle={ toggleSidebar }
+			onTabSelect={ handleTabSelect }
 			onPremiumSupport={ onPremiumSupport }
 			initialTab={ wpseoHelpCenterData.initialTab }
 			adminTabsData={ wpseoHelpCenterData.tabs }
